@@ -17,6 +17,19 @@ if (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdenti
 
 $usuario = Get-LocalUser -Name $Nombre -ErrorAction SilentlyContinue
 if (-not $usuario) { Write-Host "No existe el usuario '$Nombre'." -ForegroundColor Red; exit 1 }
+# Seguro: nunca a un administrador ni al usuario que está corriendo el script (sería dejarte a vos solo con kids-os).
+if ($usuario.SID.Value -eq [Security.Principal.WindowsIdentity]::GetCurrent().User.Value) {
+  Write-Host "'$Nombre' es tu propio usuario. Esto es para el usuario de ella: escribí su nombre." -ForegroundColor Red; exit 1
+}
+try {
+  $admins = Get-LocalGroupMember -Group (Get-LocalGroup -SID 'S-1-5-32-544') | ForEach-Object { $_.SID.Value }
+} catch {
+  # A veces Windows no puede listar el grupo (cuentas viejas borradas). Ante la duda, no se toca nada.
+  Write-Host 'No pude revisar quiénes son administradores, así que no cambié nada.' -ForegroundColor Red; exit 1
+}
+if ($admins -contains $usuario.SID.Value) {
+  Write-Host "'$Nombre' es administrador. kids-os es solo para un usuario estándar (el de ella)." -ForegroundColor Red; exit 1
+}
 $perfil = (Get-CimInstance Win32_UserProfile | Where-Object { $_.SID -eq $usuario.SID.Value }).LocalPath
 if (-not $perfil) { Write-Host "$Nombre todavía no entró nunca a su usuario. Hacé el paso 2 primero." -ForegroundColor Red; exit 1 }
 $programa = Join-Path $perfil 'AppData\Local\Programs\kids-os\kids-os.exe'
