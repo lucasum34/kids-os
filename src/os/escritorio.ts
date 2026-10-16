@@ -8,6 +8,8 @@ import { armarIconos } from './iconos'
 import * as fs from './archivos'
 import { sonar } from './sonido'
 import { menuContextual } from './ui'
+import { esPrograma, puente } from './compu'
+import { asegurarClave, menuPapa } from './papa'
 
 export function armarEscritorio(raiz: HTMLElement) {
   const fondo = el('div', 'escritorio')
@@ -44,6 +46,16 @@ export function armarEscritorio(raiz: HTMLElement) {
         abrirPrograma(p.id)
       }
       menu.append(f)
+    }
+    if (esPrograma) {
+      // En la compu de verdad: apagar y cerrar sesión (no hay otro escritorio adonde ir).
+      const pie = el('div', 'menu-inicio-pie')
+      const apagar = el('button', 'menu-inicio-apagar', '⏻ Apagar')
+      apagar.onclick = () => puente!.sistema.apagar()
+      const sesion = el('button', 'menu-inicio-apagar', '↪ Cerrar sesión')
+      sesion.onclick = () => puente!.sistema.cerrarSesion()
+      pie.append(sesion, apagar)
+      menu.append(pie)
     }
     raiz.append(menu)
   }
@@ -84,6 +96,21 @@ export function armarEscritorio(raiz: HTMLElement) {
   }
   fs.alCambiar(ponerPendrive)
   ponerPendrive()
+
+  // Menú de papá o mamá: Ctrl+Alt+Mayús+P (con la clave).
+  document.addEventListener(
+    'keydown',
+    (e) => {
+      if (e.ctrlKey && e.altKey && e.shiftKey && e.key.toLowerCase() === 'p') {
+        e.preventDefault()
+        e.stopPropagation()
+        menuPapa()
+      }
+    },
+    true,
+  )
+  // La primera vez, un adulto elige la clave.
+  setTimeout(() => asegurarClave(), 300)
 
   barra.append(inicio, tareas, pendrive, reloj)
 

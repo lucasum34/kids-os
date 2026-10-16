@@ -947,3 +947,12 @@ body.puntero-grande, body.puntero-grande *:not(canvas):not(svg):not(svg *):not(i
 .imp-hoja.saliendo { animation: imp-sale .6s ease-out; }
 @keyframes imp-sale { from { transform: translateY(-120px); opacity: 0; } }
 .imp-estado { position: absolute; bottom: 14px; font-weight: 800; color: #546e7a; }
+
+/* Menú de inicio: apagar / cerrar sesión, y el menú de papá */
+.menu-inicio-pie { display: flex; gap: 6px; justify-content: flex-end; margin-top: 8px; padding-top: 8px; border-top: 1px solid #eceff1; }
+.menu-inicio-apagar { padding: 6px 12px; border: 1px solid #cfd8dc; border-radius: 8px; background: #fff; cursor: pointer; font: inherit; font-weight: 700; }
+.menu-inicio-apagar:hover { background: #ffebee; border-color: #ef9a9a; }
+.papa { display: flex; flex-direction: column; gap: 8px; align-items: stretch; min-width: 360px; margin-top: 4px; }
+.papa-version { font-weight: 800; font-size: 18px; }
+.papa-estado { color: #455a64; margin-bottom: 6px; }
+.papa-nota { color: #90a4ae; font-size: 13px; margin-top: 6px; }

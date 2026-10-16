@@ -35,7 +35,7 @@ export const ACENTOS = [
 ]
 
 const CLAVE = 'kidsos.config'
-const PREDETERMINADA: Config = { fondo: FONDOS[0].css, acento: ACENTOS[0].color, iconos: 'mediano', puntero: 'normal', nombre: '', sonidos: true, reloj24: true, clavePadres: '1234' }
+const PREDETERMINADA: Config = { fondo: FONDOS[0].css, acento: ACENTOS[0].color, iconos: 'mediano', puntero: 'normal', nombre: '', sonidos: true, reloj24: true, clavePadres: '' }
 
 let actual: Config = leer()
 const oyentes = new Set<(c: Config) => void>()

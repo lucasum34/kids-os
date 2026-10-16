@@ -1,19 +1,76 @@
 {
   "name": "kids-os",
   "private": true,
-  "version": "0.1.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "app:dev": "set KIDSOS_DEV=1&& electron .",
+    "app:instalador": "npm run build && electron-builder --win --publish never",
+    "app:publicar": "npm run build && electron-builder --win --publish always"
   },
   "devDependencies": {
     "@types/three": "^0.169.0",
+    "electron": "^33.4.11",
+    "electron-builder": "^25.1.8",
     "typescript": "^5.9.3",
     "vite": "^6.4.4"
   },
   "dependencies": {
+    "@fontsource/nunito": "^5.3.0",
+    "electron-updater": "^6.8.9",
     "three": "^0.169.0"
+  },
+  "description": "Una compu para chicos: programas como los de verdad, para aprender jugando.",
+  "author": "lucasum34",
+  "main": "electron/main.cjs",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lucasum34/kids-os.git"
+  },
+  "build": {
+    "appId": "com.lucasum34.kidsos",
+    "productName": "kids-os",
+    "copyright": "lucasum34",
+    "directories": {
+      "output": "release",
+      "buildResources": "build"
+    },
+    "files": [
+      "dist/**",
+      "electron/**",
+      "package.json"
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "build/icon.ico",
+      "artifactName": "kids-os-${version}.exe"
+    },
+    "nsis": {
+      "oneClick": true,
+      "perMachine": false,
+      "allowElevation": false,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "runAfterFinish": true,
+      "deleteAppDataOnUninstall": false
+    },
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "lucasum34",
+        "repo": "kids-os",
+        "releaseType": "release"
+      }
+    ]
   }
 }

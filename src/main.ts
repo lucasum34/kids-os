@@ -1,3 +1,10 @@
+// Primero que todo: en el programa instalado, lo guardado va a archivos (ver os/compu.ts).
+import './os/compu'
+// La letra va adentro del programa: tiene que andar sin internet.
+import '@fontsource/nunito/400.css'
+import '@fontsource/nunito/600.css'
+import '@fontsource/nunito/700.css'
+import '@fontsource/nunito/800.css'
 import './estilos.css'
 import { armarEscritorio } from './os/escritorio'
 import { instalar } from './os/sistema'

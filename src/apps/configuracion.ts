@@ -157,7 +157,7 @@ export const configuracion: Programa = {
         }
         const bClave = el('button', 'boton', '🔒 Cambiar la clave…')
         bClave.onclick = async () => {
-          const a = await dialogo({ titulo: 'Clave de papá o mamá', icono: '🔒', mensaje: 'Escribí la clave de ahora.', campo: '', clave: true, botones: [{ texto: 'Seguir', valor: 'ok', principal: true }, { texto: 'Cancelar', valor: 'no' }] })
+          const a = config().clavePadres ? await dialogo({ titulo: 'Clave de papá o mamá', icono: '🔒', mensaje: 'Escribí la clave de ahora.', campo: '', clave: true, botones: [{ texto: 'Seguir', valor: 'ok', principal: true }, { texto: 'Cancelar', valor: 'no' }] }) : { boton: 'ok', texto: '' }
           if (a.boton !== 'ok') return
           if (a.texto !== config().clavePadres) {
             await dialogo({ titulo: 'Clave de papá o mamá', icono: '❌', mensaje: 'Esa no es la clave.', botones: [{ texto: 'Aceptar', valor: 'ok', principal: true }] })

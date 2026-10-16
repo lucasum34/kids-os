@@ -2,7 +2,7 @@
 // Enseña: los programas se instalan (y se desinstalan), tardan un rato en bajarse,
 // y para instalar hace falta el permiso de un adulto.
 
-import { config } from '../os/config'
+import { pedirClave } from '../os/papa'
 import { avisoSistema } from '../os/escritorio'
 import { abrirPrograma, alCambiarProgramas, esDelSistema, estaInstalado, ponerInstalado, todosLosProgramas } from '../os/sistema'
 import { sonar } from '../os/sonido'
@@ -29,26 +29,7 @@ const FICHAS: Record<string, { texto: string; categoria: string; tamano: number;
 }
 const CATEGORIAS = ['Todos', 'Juegos', 'Dibujo', 'Oficina', 'Diseño', 'Video', 'Aprender', 'Herramientas']
 
-/** Pide la clave de papá o mamá. */
-async function permiso(accion: string): Promise<boolean> {
-  for (;;) {
-    const r = await dialogo({
-      titulo: 'Permiso de un adulto',
-      icono: '🔒',
-      mensaje: `Para ${accion} hace falta permiso. Pedile a papá o mamá que escriba su clave.`,
-      campo: '',
-      clave: true,
-      botones: [
-        { texto: 'Aceptar', valor: 'ok', principal: true },
-        { texto: 'Cancelar', valor: 'no' },
-      ],
-    })
-    if (r.boton !== 'ok') return false
-    if (r.texto === config().clavePadres) return true
-    sonar('mal')
-    await dialogo({ titulo: 'Permiso de un adulto', icono: '❌', mensaje: 'Esa no es la clave.', botones: [{ texto: 'Probar otra vez', valor: 'ok', principal: true }] })
-  }
-}
+const permiso = (accion: string) => pedirClave(`Para ${accion} hace falta permiso.`)
 
 export const tienda: Programa = {
   id: 'tienda',

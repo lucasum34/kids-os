@@ -15,7 +15,12 @@ npm run dev
 
 Se abre en http://localhost:5207.
 
-## Pendiente
+## Programa para Windows
 
-- Empaquetarlo como programa de escritorio y guardar los archivos en Documentos (hoy usan el almacenamiento del navegador, ~5 MB).
-- Que funcione sin internet (la letra Nunito todavía se baja de Google Fonts).
+```bash
+npm run app:instalador   # arma release/kids-os-<versión>.exe
+npm run app:publicar     # arma y sube la versión a GitHub (las notebooks se actualizan solas)
+npm run app:dev          # el programa contra el servidor de desarrollo, en ventana
+```
+
+Cómo dejar una notebook compartida con un usuario para ella que abre solo kids-os: [instalar/INSTALAR.md](instalar/INSTALAR.md).
